@@ -65,7 +65,7 @@ def select_Cluster_fcm(X,U,label,clus_number):
                 label[i] = j
     return label
 
-def fcm(X,clus_number,m,epsilon):
+def Fcm(X,clus_number,m,epsilon):
     C = create_Center_fcm(X,clus_number)
     U = create_U_fcm(X,clus_number)
     label = create_label_fcm(X)
@@ -80,4 +80,4 @@ def fcm(X,clus_number,m,epsilon):
             count +=1
     label = select_Cluster_fcm(X,U,label,clus_number)
 
-    return C,label,count
+    return C,label,U

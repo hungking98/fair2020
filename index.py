@@ -50,7 +50,7 @@ def SSWC(X,label):
     b = np.zeros(n)
     s = np.zeros(n)
     for i in range(n):
-        b[i] = 10000.0
+        b[i] = 100000.0
 
     for i in range(n):
         count = 0
@@ -122,6 +122,49 @@ def PBM(X,label):
     Pbm = ((E1*Dk)/(c*Ek))**2
 
     return Pbm
+
+
+
+
+###------------------
+#IFV index
+#tham so bao gom du lieu, nhan, do phu thuoc
+def IFV(X,U,centers):
+    n = len(X)
+    c = len(centers)
+    SDmax = 0.0
+    left = 0.0
+    right = 0.0
+    for j in range(c):
+        temp1 = 0.0
+        temp2 = 0.0
+        for k in range(n):
+            temp1+= (U[k,j])**2
+            temp2+= np.log2(U[k,j])
+        temp1 = temp1/n
+        temp2 = temp2/n 
+        temp2 = (np.log2(c)-temp2)**2
+        left += temp1*temp2
+    left = left/c
+
+    for i in range(c):
+        for j in range(c):
+            if(i!=j):
+                d = (np.linalg.norm(centers[i]-centers[j]))**2
+                if(SDmax<=d):
+                    SDmax = d
+    theta = 0.0
+    for j in range(c):
+        d = 0.0
+        for k in range(n):
+            d+=(np.linalg.norm(X[k]-centers[j]))**2
+        d = d/n 
+        theta+=d
+    theta =theta/c
+    right = SDmax/theta
+    ifv = left*right
+    return ifv
+            
 
 
 
